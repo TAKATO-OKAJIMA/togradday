@@ -65,6 +65,16 @@
   </nav>
   <div id="main" class="container p-5 bg-white ">
     <div class="row mb-3">
+      <figure class="text-center">
+        <blockquote class="blockquote">
+          <pre id="adageContent" class="blockquote"></pre>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+          <cite id="adageSay">Source Title</cite>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="row mb-3">
       <div class="col-md-12">
         <h3 class="mx-3">あと何日？（卒業日：3/20 とした場合）</h3>
         <div class="border-bottom"></div>
@@ -101,6 +111,140 @@
     </div>
   </div>
   <script>
+  const adages = [
+    /*1*/
+    {
+      say: '吉田兼好',
+      content: '大欲は無欲に似たり'
+    },
+    {
+      say: 'プラトン',
+      content: '老齢は明らかに迅速なり。われらに必要以上に迅速に切迫す。'
+    },
+    {
+      say: '松下幸之助',
+      content: '石の上にも三年という。\nしかし、三年を一年で習得する努力を怠ってはならない。'
+    },
+    {
+      say: 'アンソニー・ロビンズ',
+      content: '時間を自分のものにしてしまえば、多くの人が、一年でできることを過大評価していること、\nそして、十年でできることを過小評価していることがわかるだろう。'
+    },
+    {
+      say: 'マハトマ・ガンジー',
+      content: '明日死ぬかのように生きよ。永遠に生きるかのように学べ。'
+    },
+    /*2*/
+    {
+      say: 'デール・カーネギー',
+      content: '人生とは今日一日のことである。'
+    },
+    {
+      say: 'ナポレオン・ボナパルト',
+      content: 'お前がいつの日か出会う禍は、お前がおろそかにしたある時間の報いだ。'
+    },
+    {
+      say: 'ニーチェ',
+      content: '毎日少なくとも一回、何か小さなことを断念しなければ、\n毎日は下手に使われ、翌日も駄目になるおそれがある。'
+    },
+    {
+      say: 'ウィリアム・ジェームズ',
+      content: '一生の最もすぐれた使い方は、それより長く残るもののために費やすことだ。'
+    },
+    {
+      say: 'ベンジャミン・フランクリン',
+      content: '今日という一日は、明日という日の二日分の値打ちがある。'
+    },
+    /*3*/
+    {
+      say: 'ゲーテ',
+      content: 'うまく使えば、時間はいつも十分にある。'
+    },
+    {
+      say: 'マーガレット・ミード',
+      content: '未来とは、今である。'
+    },
+    {
+      say: 'ヘンリー・フォード',
+      content: 'たいていの成功者は他人が時間を浪費している間に先へ進む。\nこれは私が長年、この眼で見てきたことである。'
+    },
+    {
+      say: '永倉万治',
+      content: '何かをやって時間を損するということは絶対にない。\n貧乏旅をすれば、大学を二つ出たようなものだ。'
+    },
+    {
+      say: 'チャールズ・バクストン',
+      content: '何をするにも時間は見つからないだろう。\n時間が欲しければ自分で作ることだ。'
+    },
+    /*4*/
+    {
+      say: 'ピーター・ドラッカー',
+      content: '時間こそは、最もユニークで乏しい資源。'
+    },
+    {
+      say: 'ケリー・グリーソン',
+      content: 'あなたに時間がどれだけあるかというのは問題ではない。\nむしろ、時間をどう使うかが問題なのだ。'
+    },
+    {
+      say: 'トルストイ',
+      content: '過去も未来も存在せず、あるのは現在と言う瞬間だけだ。'
+    },
+    {
+      say: 'イタリアのことわざ',
+      content: '時間は人間のためにつくられており、人間が時間のためにつくられているわけではない。'
+    },
+    {
+      say: 'セネカ  ',
+      content: 'ぐずぐずしている間に、人生は一気に過ぎ去っていく。'
+    },
+    /*5*/
+    {
+      say: 'アレクサンドル・ピネ',
+      content: '一番多忙な人間が一番多くの時間をもつ。'
+    },
+    {
+      say: '山西健一郎',
+      content: '時間を上手く使うためには、「明日できることは、あえて今日しない」ことが大切なのです。'
+    },
+    {
+      say: '嘉納治五郎',
+      content: '時間を最も有効に利用した者に、最も立派な仕事ができる'
+    },
+    {
+      say: 'ガストン・バシュラール',
+      content: '自分に固有の時間を、他人の時間に帰属させないことに慣れること。\n自分に固有の時間を、事物の時間に帰属させないことに慣れること。 '
+    },
+    {
+      say: 'エマーソン',
+      content: 'その日その日が一年中の最善の日である。'
+    },
+    /*6*/
+    {
+      say: '朱子',
+      content: '少年老い易く学成り難し\n一寸の光陰軽んずべからず'
+    },
+    {
+      say: 'ロバート・ヘリック',
+      content: '時のある間にバラの花を摘め、時はたえず流れ、今日ほほえむ花も明日には枯れる。'
+    },
+    {
+      say: 'セオドア・ルーズベルト',
+      content: '知恵の九割は、時間について賢くなることである。'
+    },
+    {
+      say: 'チャールズ・ディケンズ',
+      content: '今日できることを明日にしてはいけない。\n遅延は時間の泥棒だからだ。'
+    },
+    {
+      say: 'テオフラストス',
+      content: '時は人間が消費しうるもっとも価値のあるものなり。'
+    },
+
+    {
+      say: 'ソロー',
+      content: '細部を気にしていると、人生は浪費されてゆく。\n単純にしたまえ、単純に。'
+    },
+  ]
+
   const showDiffDate = function(tYear, tMonth, tDay) {
     const nowDate = new Date();
     const dnumNow = nowDate.getTime();
@@ -167,6 +311,11 @@
     return calculateGraduateDay(tYear);
   }
 
+  const renderAdage = function(day) {
+    document.getElementById('adageContent').textContent = adages[day].content;
+    document.getElementById('adageSay').textContent = adages[day].say;
+  }
+
   const renderDay = function(ctx, day) {
     ctx.textContent = day;
 
@@ -185,6 +334,7 @@
   renderDay(document.getElementById('b3m1day'), calculateB3M1GraduateDay());
   renderDay(document.getElementById('b2day'), calculateB2GraduateDay());
   renderDay(document.getElementById('b1day'), calculateB1GraduateDay());
+  renderAdage(new Date().getDay());
 
   </script>
 </body>
