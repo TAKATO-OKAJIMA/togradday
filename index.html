@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>大学あと何日？</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+  <style>
+    .day-font {
+      font-size: 120pt;
+    }
+    .blink {
+	    -webkit-animation: blink 1s ease infinite;
+	    animation: blink 1s ease infinite;
+    }
+    @-webkit-keyframes blink {
+      0% {opacity: 0;}
+      100% {opacity: 1;}
+    }
+    @keyframes blink {
+      0% {opacity: 0;}
+      100% {opacity: 1;}
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href=".">大学残り日数</a>
+      <!-- <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+          aria-expanded="false" aria-label="Toggle navigation"></button>
+      <div class="collapse navbar-collapse" id="collapsibleNavId">
+          <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+              <li class="nav-item">
+                  <a class="nav-link active" href="#" aria-current="page">Home <span class="visually-hidden">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownId">
+                      <a class="dropdown-item" href="#">Action 1</a>
+                      <a class="dropdown-item" href="#">Action 2</a>
+                  </div>
+              </li>
+          </ul>
+          <form class="d-flex my-2 my-lg-0">
+              <input class="form-control me-sm-2" type="text" placeholder="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+      </div> -->
+  </nav>
+  <div id="main" class="container p-5 bg-white ">
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <h3 class="mx-3">あと何日？（卒業日：3/20 とした場合）</h3>
+        <div class="border-bottom"></div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-12 text-center">
+        <h3>学部4年，修士2年の卒業まであと</h3>
+        <span id="b4m2day" class="day-font">Error</span><span class="fs-1">日</span>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-12 text-center">
+        <h3>学部3年，修士1年の卒業まであと</h3>
+        <span id="b3m1day" class="day-font">Error</span><span class="fs-1">日</span>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-12 text-center">
+        <h3>学部2年の卒業まであと</h3>
+        <span id="b2day" class="day-font">Error</span><span class="fs-1">日</span>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-12 text-center">
+        <h3>学部1年の卒業まであと</h3>
+        <span id="b1day" class="day-font">Error</span><span class="fs-1">日</span>
+      </div>
+    </div>
+  </div>
+  <div class="bg-dark">
+    <div class="py-3 text-center text-secondary">
+      <p>&copy; 2022 TAKATO-OKAJIMA</p>
+    </div>
+  </div>
+  <script>
+  const showDiffDate = function(tYear, tMonth, tDay) {
+    const nowDate = new Date();
+    const dnumNow = nowDate.getTime();
+
+    const targetDate = new Date(tYear, tMonth - 1, tDay); 
+    const dnumTarget = targetDate.getTime();
+
+    const diffMSec = dnumTarget - dnumNow;
+    const diffDays = diffMSec / (1000 * 60 * 60 * 24);
+    const showDays = Math.ceil(diffDays); 
+
+    return showDays;
+  }
+
+  const calculateGraduateDay = function(tYear) {
+    return showDiffDate(tYear, 3, 20);
+  }
+
+  const calculateB4M2GraduateDay = function()  {
+    const nowDate = new Date();
+    const nowMonth = nowDate.getMonth() + 1;
+
+    let tYear = nowDate.getFullYear();
+    if(nowMonth >= 4) {
+      tYear += 1;
+    }
+
+    return calculateGraduateDay(tYear);
+  }
+
+  const calculateB3M1GraduateDay = function()  {
+    const nowDate = new Date();
+    const nowMonth = nowDate.getMonth() + 1;
+
+    let tYear = nowDate.getFullYear() + 1;
+    if(nowMonth >= 4) {
+      tYear += 1;
+    }
+
+    return calculateGraduateDay(tYear);
+  }
+
+  const calculateB2GraduateDay = function()  {
+    const nowDate = new Date();
+    const nowMonth = nowDate.getMonth() + 1;
+
+    let tYear = nowDate.getFullYear() + 2;
+    if(nowMonth >= 4) {
+      tYear += 1;
+    }
+
+    return calculateGraduateDay(tYear);
+  }
+
+  const calculateB1GraduateDay = function()  {
+    const nowDate = new Date();
+    const nowMonth = nowDate.getMonth() + 1;
+
+    let tYear = nowDate.getFullYear() + 3;
+    if(nowMonth >= 4) {
+      tYear += 1;
+    }
+
+    return calculateGraduateDay(tYear);
+  }
+
+  const renderDay = function(ctx, day) {
+    ctx.textContent = day;
+
+    if(day < 365 + 180 && day > 180) {
+      ctx.classList.add('text-warning');
+    }
+    else if(day < 180) {
+      ctx.classList.add('text-danger');
+    }
+    if(day < 31) {
+      ctx.classList.add('blink')
+    }
+  }
+
+  renderDay(document.getElementById('b4m2day'), calculateB4M2GraduateDay());
+  renderDay(document.getElementById('b3m1day'), calculateB3M1GraduateDay());
+  renderDay(document.getElementById('b2day'), calculateB2GraduateDay());
+  renderDay(document.getElementById('b1day'), calculateB1GraduateDay());
+
+  </script>
+</body>
+</html>
