@@ -78,31 +78,41 @@
     </div>
     <div class="row mb-3">
       <div class="col-md-12">
-        <h3 class="mx-3">あと何日？（卒業日：3/20 とした場合）</h3>
+        <h3 class="mx-3">あと何日？</h3>
         <div class="border-bottom"></div>
       </div>
     </div>
-    <div class="row mb-3">
-      <div class="col-md-12 text-center">
-        <h3>学部4年，修士2年の卒業まであと</h3>
+    <div class="row mb-3 text-center">
+      <h3>学部4年，修士2年の</h3>
+      <div class="col-md-6 text-center">
+        <h3>卒論（修論）発表まであと</h3>
+        <span id="b4m2paday" class="day-font">Error</span><span class="fs-1">日</span>
+      </div>
+      <div class="col-md-6 text-center">
+        <h3>卒業（3/20）まであと</h3>
         <span id="b4m2day" class="day-font">Error</span><span class="fs-1">日</span>
       </div>
     </div>
-    <div class="row mb-3">
-      <div class="col-md-12 text-center">
-        <h3>学部3年，修士1年の卒業まであと</h3>
+    <div class="row mb-3 text-center">
+      <h3>学部3年，修士1年の</h3>
+      <div class="col-md-6 text-center">
+        <h3>卒論（修論）発表まであと</h3>
+        <span id="b3m1paday" class="day-font">Error</span><span class="fs-1">日</span>
+      </div>
+      <div class="col-md-6 text-center">
+        <h3>卒業（3/20）まであと</h3>
         <span id="b3m1day" class="day-font">Error</span><span class="fs-1">日</span>
       </div>
     </div>
     <div class="row mb-3">
       <div class="col-md-12 text-center">
-        <h3>学部2年の卒業まであと</h3>
+        <h3>学部2年の卒業（3/20）まであと</h3>
         <span id="b2day" class="day-font">Error</span><span class="fs-1">日</span>
       </div>
     </div>
     <div class="row mb-3">
       <div class="col-md-12 text-center">
-        <h3>学部1年の卒業まであと</h3>
+        <h3>学部1年の卒業（3/20）まであと</h3>
         <span id="b1day" class="day-font">Error</span><span class="fs-1">日</span>
       </div>
     </div>
@@ -261,56 +271,30 @@
     return showDays;
   }
 
-  const calculateGraduateDay = function(tYear) {
+  const calculatePaperDay = function(grade) {
+    const nowDate = new Date();
+    const nowMonth = nowDate.getMonth() + 1;
+    const gap = 4 - grade;
+
+    let tYear = nowDate.getFullYear() + gap;
+    if(nowMonth >= 2) {
+      tYear += 1;
+    }
+    
+    return showDiffDate(tYear, 1, 31);
+  }
+
+  const calculateGraduateDay = function(grade) {
+    const nowDate = new Date();
+    const nowMonth = nowDate.getMonth() + 1;
+    const gap = 4 - grade;
+
+    let tYear = nowDate.getFullYear() + gap;
+    if(nowMonth >= 4 || (nowMonth == 3 && nowDate.getDate() >= 21)) {
+      tYear += 1;
+    }
+
     return showDiffDate(tYear, 3, 20);
-  }
-
-  const calculateB4M2GraduateDay = function()  {
-    const nowDate = new Date();
-    const nowMonth = nowDate.getMonth() + 1;
-
-    let tYear = nowDate.getFullYear();
-    if(nowMonth >= 4) {
-      tYear += 1;
-    }
-
-    return calculateGraduateDay(tYear);
-  }
-
-  const calculateB3M1GraduateDay = function()  {
-    const nowDate = new Date();
-    const nowMonth = nowDate.getMonth() + 1;
-
-    let tYear = nowDate.getFullYear() + 1;
-    if(nowMonth >= 4) {
-      tYear += 1;
-    }
-
-    return calculateGraduateDay(tYear);
-  }
-
-  const calculateB2GraduateDay = function()  {
-    const nowDate = new Date();
-    const nowMonth = nowDate.getMonth() + 1;
-
-    let tYear = nowDate.getFullYear() + 2;
-    if(nowMonth >= 4) {
-      tYear += 1;
-    }
-
-    return calculateGraduateDay(tYear);
-  }
-
-  const calculateB1GraduateDay = function()  {
-    const nowDate = new Date();
-    const nowMonth = nowDate.getMonth() + 1;
-
-    let tYear = nowDate.getFullYear() + 3;
-    if(nowMonth >= 4) {
-      tYear += 1;
-    }
-
-    return calculateGraduateDay(tYear);
   }
 
   const renderAdage = function(day) {
@@ -332,10 +316,16 @@
     }
   }
 
-  renderDay(document.getElementById('b4m2day'), calculateB4M2GraduateDay());
-  renderDay(document.getElementById('b3m1day'), calculateB3M1GraduateDay());
-  renderDay(document.getElementById('b2day'), calculateB2GraduateDay());
-  renderDay(document.getElementById('b1day'), calculateB1GraduateDay());
+  renderDay(document.getElementById('b4m2day'), calculateGraduateDay(4));
+  renderDay(document.getElementById('b4m2paday'), calculatePaperDay(4));
+
+  renderDay(document.getElementById('b3m1day'), calculateGraduateDay(3));
+  renderDay(document.getElementById('b3m1paday'), calculatePaperDay(3));
+
+  renderDay(document.getElementById('b2day'), calculateGraduateDay(2));
+
+  renderDay(document.getElementById('b1day'), calculateGraduateDay(1));
+
   renderAdage(new Date().getDate());
 
   </script>
